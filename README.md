@@ -1,2 +1,1 @@
-# Atcoder_template
-Atcoderの備忘録
+# Atcoderの備忘録
