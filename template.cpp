@@ -7,6 +7,7 @@
 #include <map>
 #include <queue>
 #include <iomanip>
+#include <functional>
 
 using namespace std;
 using ll = long long;
