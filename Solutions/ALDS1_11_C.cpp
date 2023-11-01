@@ -43,7 +43,7 @@ int main () {
 
     queue<int> q;
 
-    int u = 0; q.push(u);
+    q.push(0);
     ans[0] = 0;
     
     while(!q.empty()) {
