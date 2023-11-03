@@ -41,17 +41,17 @@ int main(){
     // 開始位置を0に設定
     mincost[r] = 0;
 
-    deque<int> deq;
-    deq.push_back(r);
+    priority_queue<int> q;
+    q.push(r);
 
     // queueの外かどうか
     vector<bool> out_queue(V, true);
     out_queue[r] = false;
 
     // ダイクストラ法
-    while(!deq.empty()){
-        int u = deq.front(); 
-        deq.pop_front(); 
+    while(!q.empty()){
+        int u = q.top(); 
+        q.pop(); 
         
         out_queue[u] = true;
         
@@ -62,7 +62,7 @@ int main(){
                 mincost[v] = mincost[u] + c;
                 
                 if(out_queue[v]) {
-                deq.push_back(v);
+                q.push(v);
                 
                 out_queue[v] = false;
                 }
@@ -75,6 +75,4 @@ int main(){
         if( mincost[i] == inf) puts("INF");
         else printf("%d\n",mincost[i]);
     }
-
-    return 0;
 }
