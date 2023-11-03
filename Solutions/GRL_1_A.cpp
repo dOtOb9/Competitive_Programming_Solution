@@ -25,7 +25,7 @@ int main(){
     scanf("%d %d %d",&V,&E,&r);
 
     // グラフの配列
-    vector<vector<pair<int, int>>> G(E);
+    vector<vector<pair<int, int>>> G(V);
 
     int s,t,d;
 
