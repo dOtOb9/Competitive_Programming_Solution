@@ -17,3 +17,5 @@ const int inf = 1 << 30;
 const ll INF = 1LL << 60;
 
 #define rep(i, n) for (int i = 0; i < n; ++i)
+#define pii pair<int, int>
+
