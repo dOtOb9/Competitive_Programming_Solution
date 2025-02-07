@@ -23,11 +23,23 @@ const l INF = 9223372036854775807;  // 9e18    1LL << 60
 
 
 int main() {
-    l X;cin>>X;
+    l n;cin>>n;
+    
+
+    vector<l> A(n);
+
+    r(i,n) cin>>A[i];
 
     l ans=0;
 
-    r1(i,10)r1(j,10) if (i*j!=X) ans+=i*j;
+    sort(A.begin(), A.end());
+
+    for (auto b : A) {
+
+        auto it=upper_bound(A.begin(), A.end(), b/2);
+
+        ans+=it-A.begin();
+    }
 
     cout<<ans<<endl;
 }
