@@ -25,25 +25,23 @@ const l INF = 9223372036854775807;  // 9e18    1LL << 60
 int main() {
     l R;cin>>R;
 
-    l y=1.5;
-
     l ans=0;
 
     r(i, R+1) {
-        double ny=i+0.5;
+        double y = i + 0.5;
 
-        l le=0, ri=R;
+        l le = 0, ri=R+1;
 
-        while(ri-le>1) {
-            l mid=(ri+le)/2;
+        while( ri - le > 1) {
+            l mid = (ri+le)/2;
 
-            double nx=mid+0.5;
+             double x = 0.5 + mid;
 
-            if ((ny*ny+nx*nx)<=R*R) le=mid;
+            if (y* y + x * x <= R * R) le=mid;
             else ri=mid;
         }
 
-        ans+=le;
+        ans += le;
     }
 
     cout<<ans*4+1<<endl;
