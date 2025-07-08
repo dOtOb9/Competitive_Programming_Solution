@@ -8,6 +8,7 @@
 #include <queue>
 #include <iomanip>
 #include <functional>
+#include <stack>
 
 using namespace std;
 using l = long long;
@@ -61,6 +62,3 @@ struct UnionFind {
     }
 };
 
-int main() {
-    
-}
