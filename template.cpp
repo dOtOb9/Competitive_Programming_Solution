@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <functional>
 #include <stack>
+#include <numeric>
 
 using namespace std;
 using l = long long;
