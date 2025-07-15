@@ -65,20 +65,30 @@ struct UnionFind {
 
 int main() {
     l n;cin >> n;
-    vector<l> a(n);
+
+    vector<l> a(n), b(n);
 
     r(i, n) cin >> a[i];
+    r(i, n) cin >> b[i];
 
-    sort(a.begin(), a.end());
+    vector<vector<l>> dp(n+1, vector<l>(3010));
 
-    l res = INF;
+    dp[0][0] = 1;
 
-    l aj;
+    r(i, n+1) {
+        r(j, 3000) {
+            dp[i][j+1] += dp[i][j];
+            dp[i][j+1] %= 998244353;
+        }
 
-    r(i, n) if (abs((a.back()+1) / 2 - a[i]) < res) {
-        aj = a[i];
-        res = abs(a.back()/2 - a[i]);
+        if (i != n) {
+            for (int j = a[i]; j <= b[i]; ++j) {
+                dp[i+1][j] += dp[i][j];
+                dp[i+1][j] %= 998244353;
+            }
+        }
+
     }
 
-    cout << a.back() << " " << aj << endl;
+    cout << dp[n][3000] % 998244353 << endl;
 }
