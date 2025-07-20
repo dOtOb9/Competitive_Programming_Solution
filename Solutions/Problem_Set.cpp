@@ -64,7 +64,7 @@ struct UnionFind {
 
 int main() {
     l n;cin >>n;
-    map<l, l> mapd, mapt;
+    map<l, l> mapd;
 
     r(i, n) {
         l d;cin >> d;
