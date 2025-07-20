@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <functional>
 #include <stack>
+#include <numeric>
 
 using namespace std;
 using l = long long;
@@ -39,9 +40,9 @@ struct UnionFind {
         if (parent[x] == x) return x;
         return parent[x] = find(parent[x]);  // パス圧縮
     }
-    bool unite(l x, l y) {
-        l rx = find(x);
-        l ry = find(y);
+    bool unite(pll xy) {
+        l rx = find(xy.first);
+        l ry = find(xy.second);
         if (rx == ry) return false;
         if (rank[rx] < rank[ry]) swap(rx, ry);
         parent[ry] = rx;
@@ -53,8 +54,8 @@ struct UnionFind {
         return true;
     }
     
-    bool same(l x, l y) {
-        return find(x) == find(y);
+    bool same(pll xy) {
+        return find(xy.first) == find(xy.second);
     }
     
     l getSize(l x) {
@@ -64,21 +65,14 @@ struct UnionFind {
 
 int main() {
     l n, a, b;cin >> n >> a >> b;
+    l P, Q, R, S;cin >> P >> Q >> R >> S;
 
-    l P, Q, R, S;cin >> P>>Q>>R>>S;
-
-    for (l i = P; i < Q+1; ++i) for (l j = R; j < S+1; ++j) {
+    for (l i = P; i <= Q; ++i) for (l j = R; j <= S; ++j) {
         l k = i - a;
 
-        if (b+k == j) {
-            if (max(1-a, 1-b) <= k && k <= min(n-a, n-b)) cout << "#";
-            else cout << ".";
-        } else if (b-k == j) {
-            if (max(1-a, b-n) <= k && k <= min(n-a, b-1)) cout << "#";
-            else cout << ".";
-        } else {
-            cout << ".";
-        }
+        if (j == k + b) cout << "#";
+        else if (j == b - k) cout << "#";
+        else cout << ".";
 
         if (j == S) cout << endl;
     }
