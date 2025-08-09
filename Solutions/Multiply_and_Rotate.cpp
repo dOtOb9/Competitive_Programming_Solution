@@ -87,17 +87,15 @@ int main() {
             q.push(x);
         }
 
-        if (u >= 10 && u % 10 != 0) {  // Can only rotate if u >= 10 and not divisible by 10
+        if (u >= 10 && u % 10 != 0) {
             string st = to_string(u);
-            rotate(st.begin(), st.begin()+(st.size()-1), st.end());
+            rotate(st.begin(), st.end()-1, st.end());
 
-            if (st[0] != '0') {  // Check if the rotated number doesn't start with 0
-                l v = stoi(st);
-
-                if (v < MAX && d[v] == -1 && u != v) {
-                    d[v] = d[u] + 1;
-                    q.push(v); 
-                }
+            l v = stoi(st);
+    
+            if (v < MAX && d[v] == -1) {
+                d[v] = d[u] + 1;
+                q.push(v); 
             }
         }
     }
