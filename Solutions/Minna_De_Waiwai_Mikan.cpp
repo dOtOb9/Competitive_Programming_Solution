@@ -8,7 +8,6 @@
 #include <queue>
 #include <iomanip>
 #include <functional>
-#include <stack>
 
 using namespace std;
 using l = long long;
@@ -22,15 +21,9 @@ const l INF = 9223372036854775807;  // 9e18    1LL << 60
 #define r0(i) for (l i = -1; i < 2; ++i)
 #define pll pair<l, l>
 
-
 void YesNo(bool s=false) {
     if (s) cout<<"Yes"<<endl;
     else cout<<"No"<<endl;
-}
-
-void nans(l ans) {
-    if (ans==INF) cout<<-1<<endl;
-    else cout<<ans<<endl;
 }
 
 struct UnionFind {
@@ -45,9 +38,9 @@ struct UnionFind {
         if (parent[x] == x) return x;
         return parent[x] = find(parent[x]);  // パス圧縮
     }
-    bool unite(pll xy) {
-        l rx = find(xy.first);
-        l ry = find(xy.second);
+    bool unite(l x, l y) {
+        l rx = find(x);
+        l ry = find(y);
         if (rx == ry) return false;
         if (rank[rx] < rank[ry]) swap(rx, ry);
         parent[ry] = rx;
@@ -59,8 +52,8 @@ struct UnionFind {
         return true;
     }
     
-    bool same(pll xy) {
-        return find(xy.first) == find(xy.second);
+    bool same(l x, l y) {
+        return find(x) == find(y);
     }
     
     l getSize(l x) {
@@ -68,13 +61,8 @@ struct UnionFind {
     }
 };
 
-
 int main() {
-    l a, b, K, L;cin>>a>>b>>K>>L;
+    l a, b, K, L;cin >> a >> b >> K >> L;
 
-    l ans = K / L * b + min(b, K % L * a);
-
-    ans = min(ans, a*K);
-
-    cout << ans<<endl;
+    cout << min(a * L, b) * (K / L) + min(K % L * a, b) << endl;
 }
