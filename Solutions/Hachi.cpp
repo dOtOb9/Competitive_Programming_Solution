@@ -8,6 +8,8 @@
 #include <queue>
 #include <iomanip>
 #include <functional>
+#include <stack>
+#include <numeric>
 
 using namespace std;
 using l = long long;
@@ -38,9 +40,9 @@ struct UnionFind {
         if (parent[x] == x) return x;
         return parent[x] = find(parent[x]);  // パス圧縮
     }
-    bool unite(l x, l y) {
-        l rx = find(x);
-        l ry = find(y);
+    bool unite(pll xy) {
+        l rx = find(xy.first);
+        l ry = find(xy.second);
         if (rx == ry) return false;
         if (rank[rx] < rank[ry]) swap(rx, ry);
         parent[ry] = rx;
@@ -52,8 +54,8 @@ struct UnionFind {
         return true;
     }
     
-    bool same(l x, l y) {
-        return find(x) == find(y);
+    bool same(pll xy) {
+        return find(xy.first) == find(xy.second);
     }
     
     l getSize(l x) {
@@ -63,59 +65,41 @@ struct UnionFind {
 
 int main() {
     string s;cin >> s;
+    vector<l> num(10);
 
-    vector<l> d(10);
+    if (s.size() == 1) {
+        YesNo((s[0]-'0')%8 == 0);
+        return 0;
+    }else if (s.size() == 2) {
+        l a = s[0] - '0';
+        l b = s[1] - '0';
 
-    for(char c : s) {
-        l n = c - '0';
-
-        d[n]++;
-    }
-
-    if (s.size() < 4) {
-        sort(s.begin(), s.end());
-
-        r(i, 1000) {
-            if (i % 8 == 0) {
-                string sp = to_string(i);
-
-                sort(sp.begin(), sp.end());
-
-                if (sp == s) {
-                    YesNo(true);
-                    return 0;
-                }
-            }
-        }
-
-        YesNo(false);
-
+        YesNo((a*10 + b) % 8 == 0 || (a + b*10) % 8 == 0);
         return 0;
     }
 
-    r1(i, 10) r1(j, 10) r1(k, 10) {
-        l a = i* 100 + j * 10 + k;
+    for (char c : s) num[c - '0']++;
 
-        if (a % 8 == 0) {
-            auto sp = d;
+    for (l i = 100; i < 1000; ++i) {
+        if (i % 8 == 0) {
+            string sp = to_string(i);
+            
+            auto res = num;
 
-            sp[i]--;
-            sp[j]--;
-            sp[k]--;
+            r(j, 3) res[sp[j]-'0']--;
 
             bool flag = true;
 
-            r(x, 10) {
-                if (sp[x] < 0) flag = false;
+            r(j, 10) {
+                if (res[j] < 0) flag = false;
             }
 
             if (flag) {
-                YesNo(true);
-                
+                cout << "Yes" << endl;
                 return 0;
             }
         }
     }
 
-    YesNo(false);
+    cout << "No" << endl;
 }
