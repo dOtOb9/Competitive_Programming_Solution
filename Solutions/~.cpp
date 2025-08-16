@@ -81,9 +81,6 @@ int main() {
 			else v.back().second++;
 		}
 	}
-
-    for (auto [i, c] : v) cout << i << c << " ";
-    cout << endl;
 	l sz = v.size();
 	l ans = 0;
 	r1(i, sz-1) if (v[i].first == '>') ans += v[i - 1].second * v[i + 1].second;
