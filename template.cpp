@@ -1,15 +1,5 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
-#include <algorithm>
-#include <set>
-#include <map>
-#include <queue>
-#include <iomanip>
-#include <functional>
-#include <stack>
-#include <numeric>
+#include <bits/stdc++.h>
+#include <atcoder/all>
 
 using namespace std;
 using l = long long;
@@ -94,3 +84,5 @@ vector < l > Era(int n) {
 	}
 	return res;
 }
+
+//==================================================================================
