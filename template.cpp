@@ -11,6 +11,7 @@ const int inf = 2147483647;        // 2e9     1 << 30
 const l INF = 9223372036854775807; // 9e18    1LL << 60
 
 #define r(i, n) for (l i = 0; i < n; ++i)
+#define re(i, n) for (l i = n-1; i >= 0; --i)
 #define r1(i, n) for (l i = 1; i < n; ++i)
 #define r0(i) for (l i = -1; i < 2; ++i)
 #define pll pair<l, l>
