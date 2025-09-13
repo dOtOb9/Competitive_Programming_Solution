@@ -1,0 +1,66 @@
+[workspace]
+resolver = "2"
+members = [
+    "contests/ahc053",
+    # 今後のコンテストはここに追加
+    # "contests/ahc054",
+    # "contests/ahc055",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["dOtOb9"]
+
+# ライブラリ本体
+[package]
+name = "heuristic-common"
+version.workspace = true
+edition.workspace = true
+description = "AHC共通ライブラリ - ヒューリスティックコンテスト用の統合開発環境"
+repository = "https://github.com/dOtOb9/Competitive_Programming_Solution"
+documentation = "https://docs.rs/heuristic-common"
+keywords = ["competitive-programming", "atcoder", "heuristic", "contest"]
+categories = ["algorithms", "game-development"]
+
+[lib]
+name = "heuristic_common"
+path = "src/lib.rs"
+
+[dependencies]
+# ライブラリ自体の依存関係
+rand.workspace = true
+rustc-hash.workspace = true
+itertools.workspace = true
+proconio.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+# docs.rs での表示設定
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[workspace.dependencies]
+# 共通依存関係
+rand = "0.8"
+rustc-hash = "1.1"
+itertools = "0.12"
+num-traits = "0.2"
+proconio = "0.4"
+
+# ビジュアライザー・デバッグ用
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 最適化用
+rayon = "1.8"
+
+[profile.release]
+lto = true
+panic = "abort"
+codegen-units = 1
+
+[profile.dev]
+opt-level = 1
+debug = true

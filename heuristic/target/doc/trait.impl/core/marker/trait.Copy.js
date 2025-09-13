@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"heuristic_common":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.75.0/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"struct\" href=\"heuristic_common/utils/grid/struct.Pos.html\" title=\"struct heuristic_common::utils::grid::Pos\">Pos</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

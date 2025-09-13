@@ -1,0 +1,16 @@
+[package]
+name = "ahc053"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+# ワークスペース共通依存関係
+rand.workspace = true
+rustc-hash.workspace = true
+itertools.workspace = true
+proconio.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+
+# 共通ライブラリ（親ディレクトリの共通lib）
+heuristic-common = { path = "../.." }

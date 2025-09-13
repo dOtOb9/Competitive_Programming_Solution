@@ -1,0 +1,102 @@
+# AHC共通Makefileテンプレート
+# 各コンテストディレクトリでincludeして使用
+
+# 共通変数
+HEURISTIC_ROOT := $(shell cd ../.. && pwd)
+TOOLS_DIR := $(HEURISTIC_ROOT)/heuristic/tools
+COMMON_VIS_DIR := $(HEURISTIC_ROOT)/heuristic/visualizer-common
+
+# デフォルトターゲット
+.DEFAULT_GOAL := help
+
+# Rustプロジェクトの場合
+ifdef RUST_PROJECT
+CARGO_TARGET := target/release/$(shell basename $(CURDIR))
+CARGO_DEBUG_TARGET := target/debug/$(shell basename $(CURDIR))
+
+build: ## Rust プロジェクトをリリースビルド
+	cargo build --release
+
+build-debug: ## Rust プロジェクトをデバッグビルド
+	cargo build
+
+run: build ## プログラムを実行（リリース版）
+	./$(CARGO_TARGET)
+
+run-debug: build-debug ## プログラムを実行（デバッグ版）
+	./$(CARGO_DEBUG_TARGET)
+
+test: ## テストを実行
+	cargo test
+
+clean: ## ビルド成果物をクリーン
+	cargo clean
+	rm -rf output/*
+endif
+
+# C++プロジェクトの場合
+ifdef CPP_PROJECT
+CXX := g++
+CXXFLAGS := -std=c++17 -O2 -Wall -Wextra
+TARGET := main
+
+build: ## C++ プロジェクトをビルド
+	$(CXX) $(CXXFLAGS) -o $(TARGET) main.cpp
+
+run: build ## プログラムを実行
+	./$(TARGET)
+
+clean: ## ビルド成果物をクリーン
+	rm -f $(TARGET)
+	rm -rf output/*
+endif
+
+# 共通ターゲット
+setup-dirs: ## 必要なディレクトリを作成
+	mkdir -p input output visualizer
+
+visualize: ## ビジュアライザを実行（ブラウザで開く）
+	$(TOOLS_DIR)/visualize.sh -b
+
+visualize-folder: ## 結果フォルダを開く
+	$(TOOLS_DIR)/visualize.sh -o
+
+download-vis: ## 公式ビジュアライザをダウンロード（手動で実装）
+	@echo "公式ビジュアライザのダウンロードURLを確認してください"
+	@echo "例: wget https://img.atcoder.jp/ahc053/visualizer.html -O visualizer/visualizer.html"
+
+# サンプルケース実行
+run-sample: ## サンプルケースを実行
+	@if [ -f "input/sample.txt" ]; then \
+		echo "サンプルケースを実行中..."; \
+		$(MAKE) run < input/sample.txt > output/sample_output.txt; \
+		echo "結果: output/sample_output.txt"; \
+	else \
+		echo "input/sample.txt が見つかりません"; \
+	fi
+
+# 複数ケース実行
+run-all: ## 全ての入力ファイルを実行
+	@echo "全ての入力ファイルを実行中..."
+	@for input in input/*.txt; do \
+		if [ -f "$$input" ]; then \
+			base=$$(basename "$$input" .txt); \
+			echo "実行中: $$input -> output/$${base}_output.txt"; \
+			$(MAKE) run < "$$input" > "output/$${base}_output.txt"; \
+		fi; \
+	done
+	@echo "全て完了"
+
+# ヘルプ
+help: ## このヘルプを表示
+	@echo "AHC共通Makefile"
+	@echo ""
+	@echo "使用可能なターゲット:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "環境変数:"
+	@echo "  RUST_PROJECT=1  : Rustプロジェクト用ターゲットを有効化"
+	@echo "  CPP_PROJECT=1   : C++プロジェクト用ターゲットを有効化"
+
+.PHONY: build build-debug run run-debug test clean setup-dirs visualize visualize-folder download-vis run-sample run-all help
