@@ -44,39 +44,10 @@ vector < l > Era(int n) {
 //==================================================================================
 
 int main() {
-    l n, x, y;cin >> n >> x >> y;--x;--y;
-    vector<vector<l>> g(n);
+    l t;cin >> t;
+    r(_, t) {
+        l na, nb, nc;cin >> na >> nb >> nc;
 
-    r(i, n-1) {
-        l u, v;cin >> u >> v;--u;--v;
-
-        g[u].push_back(v);
-        g[v].push_back(u);
+        cout << min(min(na, nc), (na+nb+nc)/3) << endl;
     }
-
-    vector<l> vs(n);
-    
-    function<bool(l)> dfs = [&] (l u) {
-        vs[u] = true;
-
-        if (u == x) {
-            cout << x + 1 << " ";
-            return true;
-        }
-
-        for (l v : g[u]) {
-            if (vs[v]) continue;
-
-            if (dfs(v)) {
-                cout << u +1 << " ";
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    dfs(y);
-
-    cout << endl;
 }

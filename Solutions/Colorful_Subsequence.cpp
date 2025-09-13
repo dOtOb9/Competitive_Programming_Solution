@@ -44,39 +44,21 @@ vector < l > Era(int n) {
 //==================================================================================
 
 int main() {
-    l n, x, y;cin >> n >> x >> y;--x;--y;
-    vector<vector<l>> g(n);
+    l n;cin >> n;
+    string s;cin >> s;
 
-    r(i, n-1) {
-        l u, v;cin >> u >> v;--u;--v;
+    vector<l> cnt(26);
 
-        g[u].push_back(v);
-        g[v].push_back(u);
+    for (char c : s) {
+        cnt[c-'a']++;
     }
 
-    vector<l> vs(n);
-    
-    function<bool(l)> dfs = [&] (l u) {
-        vs[u] = true;
+    l ans = 1;
 
-        if (u == x) {
-            cout << x + 1 << " ";
-            return true;
-        }
+    r(i, 26) {
+        ans *= cnt[i]+1;
+        ans %= (l)1e9+7;
+    }
 
-        for (l v : g[u]) {
-            if (vs[v]) continue;
-
-            if (dfs(v)) {
-                cout << u +1 << " ";
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    dfs(y);
-
-    cout << endl;
+    cout << ans-1 << endl;
 }
