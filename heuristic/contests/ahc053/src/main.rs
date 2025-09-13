@@ -1,50 +1,31 @@
-use heuristic_common::*;
-use proconio::input;
+use std::io::{self, BufWriter, Write, Read};
 
 fn main() {
-    // 入力読み込み
-    input! {
-        n: usize,
-        // ここに問題固有の入力を追加
+    let mut input = String::new();
+    io::stdin().read_to_string(&mut input).unwrap();
+    let mut lines = input.lines();
+    
+    let first_line: Vec<i64> = lines.next().unwrap()
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
+    
+    let n = first_line[0] as usize;
+    let _m = first_line[1] as usize;
+    let l = first_line[2];
+    let u = first_line[3];
+    
+    // 2行目は読み飛ばし（bの値は使わない）
+    let _b_line = lines.next().unwrap();
+    
+    let value = (u + l) / 2;
+    
+    // 高速バッファリング出力
+    let stdout = io::stdout();
+    let mut writer = BufWriter::new(stdout.lock());
+    
+    for _i in 0..n {
+        writeln!(writer, "{}", value).unwrap();
     }
-    
-    debug!("n = {}", n);
-    
-    // ソルバー実行
-    let solution = solve(n);
-    
-    // 結果出力
-    output_solution(&solution);
-}
-
-fn solve(n: usize) -> Solution {
-    measure_time!("solve", {
-        // ここに問題固有の解法を実装
-        Solution {
-            // 解の構造を定義
-        }
-    })
-}
-
-fn output_solution(solution: &Solution) {
-    // ここに出力形式を実装
-    println!("{}", solution.score());
-}
-
-// 問題固有の解構造
-#[derive(Debug, Clone)]
-struct Solution {
-    // 解の要素を定義
-}
-
-impl Solution {
-    fn score(&self) -> i64 {
-        // スコア計算を実装
-        0
-    }
-    
-    fn to_json(&self) -> String {
-        // ビジュアライザー用JSON出力
-        serde_json::to_string(self).unwrap_or_default()
-    }
+    writer.flush().unwrap();
 }
