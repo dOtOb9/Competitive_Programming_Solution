@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["choose_two","random","thread_rng"],"struct":["StdRng","ThreadRng"],"trait":["CryptoRng","Distribution","IteratorRandom","Rng","RngCore","SeedableRng","SliceRandom"]};

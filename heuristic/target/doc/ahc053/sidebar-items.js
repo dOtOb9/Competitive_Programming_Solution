@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["main","output_solution","solve"],"struct":["Solution"]};
