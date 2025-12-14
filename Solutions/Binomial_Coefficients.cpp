@@ -40,9 +40,9 @@ struct UnionFind {
         if (parent[x] == x) return x;
         return parent[x] = find(parent[x]);  // パス圧縮
     }
-    bool unite(pll xy) {
-        l rx = find(xy.first);
-        l ry = find(xy.second);
+    bool unite(l x, l y) {
+        l rx = find(x);
+        l ry = find(y);
         if (rx == ry) return false;
         if (rank[rx] < rank[ry]) swap(rx, ry);
         parent[ry] = rx;
@@ -54,8 +54,8 @@ struct UnionFind {
         return true;
     }
     
-    bool same(pll xy) {
-        return find(xy.first) == find(xy.second);
+    bool same(l x, l y) {
+        return find(x) == find(y);
     }
     
     l getSize(l x) {
@@ -63,22 +63,24 @@ struct UnionFind {
     }
 };
 
+
 int main() {
     l n;cin >> n;
     vector<l> a(n);
-
     r(i, n) cin >> a[i];
 
     sort(a.begin(), a.end());
 
-    l res = INF;
 
-    l aj;
+    auto it = lower_bound(a.begin(), a.end(), (a[n-1]+1)/2);
 
-    r(i, n) if (abs((a.back()+1) / 2 - a[i]) < res) {
-        aj = a[i];
-        res = abs(a.back()/2 - a[i]);
+    if (it == a.begin()) {
+        cout << a[n-1] << " " << *it << endl;
+    } else {
+        if (abs(*it - (a[n-1]+1)/2) < abs(*(it-1) - (a[n-1]+1)/2)) {
+            cout << a[n-1] << " " << *it << endl;
+        } else {
+            cout << a[n-1] << " " << *(it-1) << endl;
+        }
     }
-
-    cout << a.back() << " " << aj << endl;
 }
